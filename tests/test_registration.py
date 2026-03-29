@@ -50,11 +50,20 @@ def test_authenticate_user(setup_database, connection):
     result = authenticate_user('authuser', 'password123')
     assert result == True
 
+def test_authenticate_nonexistent_user(setup_database, connection):
+    """Тест аутентификации несуществующего пользователя."""
+    result = authenticate_user('nonexistent', 'password123')
+    assert result == False
+
+def test_authenticate_user_wrong_password(setup_database, connection):
+    """Тест аутентификации пользователя с неправильным паролем."""
+    add_user('authuser', 'authuser@example.com', 'password123')
+    result = authenticate_user('authuser', 'wrongpassword')
+    assert result == False
 
 # Возможные варианты тестов:
 """
 
-Тест аутентификации несуществующего пользователя.
-Тест аутентификации пользователя с неправильным паролем.
+
 Тест отображения списка пользователей.
 """
