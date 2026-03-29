@@ -61,6 +61,16 @@ def test_authenticate_user_wrong_password(setup_database, connection):
     result = authenticate_user('authuser', 'wrongpassword')
     assert result == False
 
+def test_display_users(setup_database, capsys):
+    """Тест корректного отображения списка пользователей."""
+    add_user('displaytest', 'displaytest@example.com', 'password123')
+    display_users()
+    captured = capsys.readouterr()
+    assert 'displaytest' in captured.out, "Функция отображения должна выводить логины пользователей."
+    assert 'password123' not in captured.out, "Пароли не должны отображаться."
+
+
+
 # Возможные варианты тестов:
 """
 
